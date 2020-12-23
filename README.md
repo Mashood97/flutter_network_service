@@ -2,21 +2,21 @@
 
 1) First goto your pubspec.yaml file and add dependency:
    ```
-   FlutterNetworkServiceHandler:
+   flutternetworkservicehandler:
    ```
 2) run flutter pub get to update the packages dependencies.
 
 3) In your code, you can use it like this:
   first import the package:
   ```
- import 'package:FlutterNetworkServiceHandler/HttpNetworkService.dart';
+ import 'package:flutternetworkservicehandler/HttpNetworkService.dart';
   ```
 # Code Usage
 then use it like this in your code:
   ```
 
 import 'package:flutter/material.dart';
-import 'package:FlutterNetworkServiceHandler/HttpNetworkService.dart';
+import 'package:flutternetworkservicehandler/HttpNetworkService.dart';
 
 void main() {
   runApp(MyApp());

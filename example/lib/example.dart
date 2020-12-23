@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:FlutterNetworkServiceHandler/src/http_network_service.dart';
+import 'package:flutternetworkservicehandler/src/http_network_service.dart';
 
 void main() {
   runApp(MyApp());

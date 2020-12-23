@@ -1,2 +1,2 @@
-[0.0.1] - 15-Dec-2020
-Initial release of network service handler
+[0.0.1] - 23-Dec-2020
+Initial release of flutter network service handler
