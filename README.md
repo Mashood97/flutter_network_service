@@ -16,14 +16,14 @@ then use it like this in your code:
   ```
 
 import 'package:flutter/material.dart';
-import 'package:flutternetworkservicehandler/HttpNetworkService.dart';
+import 'package:flutternetworkservicehandler/src/http_exception.dart';
+import 'package:flutternetworkservicehandler/src/http_network_service.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,10 +45,30 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List _usersList = [];
 
+  var errorMessage = 'Can\'t proceed request';
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Error Occured'),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Text('OK!'),
+          )
+        ],
+      ),
+    );
+  }
+
   Future getUsersData() async {
     try {
       final responseUsersList = await HttpNetworkService.getRequest(
-          url: 'https://jsonplaceholder.typicode.com/users',
+          url: 'https://jsonplaceholder.typicode.com/userss',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           });
@@ -60,6 +80,16 @@ class _MyHomePageState extends State<MyHomePage> {
           'website': items['website'],
         });
       }
+    } on HttpException catch (error) {
+      if (error.toString().contains('Redirection error')) {
+        errorMessage = 'The resource requested has been temporarily moved.';
+      } else if (error.toString().contains('Bad Request Format')) {
+        errorMessage = 'Your client has issued a malformed or illegal request.';
+      } else if (error.toString().contains('Internal Server Error')) {
+        errorMessage =
+            'The server encountered an error and could not complete your request.';
+      }
+      _showErrorDialog(errorMessage);
     } catch (e) {
       print(e.toString());
     }
@@ -75,27 +105,52 @@ class _MyHomePageState extends State<MyHomePage> {
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : ListView.builder(
-                    itemCount: _usersList.length,
-                    itemBuilder: (ctx, i) => ListTile(
-                      title: Text(_usersList[i]['username']),
-                      subtitle: Text(_usersList[i]['website']),
-                      leading: CircleAvatar(
-                        child: FittedBox(
-                          child: Text(
-                            _usersList[i]['id'].toString(),
+                : snapshot.data == null
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.error,
+                              size: 75,
+                              color: Colors.red,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                errorMessage.toUpperCase(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: _usersList.length,
+                        itemBuilder: (ctx, i) => ListTile(
+                          title: Text(_usersList[i]['username']),
+                          subtitle: Text(_usersList[i]['website']),
+                          leading: CircleAvatar(
+                            child: FittedBox(
+                              child: Text(
+                                _usersList[i]['id'].toString(),
+                              ),
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
                           ),
                         ),
                       ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                      ),
-                    ),
-                  ),
       ),
     );
   }
 }
+
 ```
 
 # SUPPORT

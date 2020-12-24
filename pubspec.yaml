@@ -1,6 +1,6 @@
 name: flutternetworkservicehandler
 description: This project is easy to deal with network calls as it contains all request methods i.e get,post etc. This Pacakge use http package for network handling.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/Mashood97/FlutterNetworkServiceHandler
 
 environment:
