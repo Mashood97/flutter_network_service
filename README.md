@@ -155,6 +155,9 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 ```
+# 🐛 Bugs/Requests 
+If you encounter any problems feel free to open an issue. If you feel the library is
+missing some feature, please raise a ticket on Github. Pull request are also welcome.
 
 # 🚀 SUPPORT
 You liked this package? then give it a star. If you want to help then:
