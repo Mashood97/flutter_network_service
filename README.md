@@ -1,4 +1,4 @@
-# 🎖 Introduction
+# 🎖 Installing
 
 1) First goto your pubspec.yaml file and add dependency:
    ```
@@ -6,12 +6,15 @@
    ```
 2) run flutter pub get to update the packages dependencies.
 
+
+
+# ⚡️ Import
 3) In your code, you can use it like this:
   first import the package:
   ```
  import 'package:flutternetworkservicehandler/HttpNetworkService.dart';
   ```
-# Code Usage
+# 🎮 Code Usage
 then use it like this in your code:
   ```
 
@@ -153,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ```
 
-# SUPPORT
+# 🚀 SUPPORT
 You liked this package? then give it a star. If you want to help then:
 Star this repository.
 Send a Pull Request with new features, see Contribution Guidelines.
