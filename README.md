@@ -1,4 +1,4 @@
-# Introduction
+# 🎖 Introduction
 
 1) First goto your pubspec.yaml file and add dependency:
    ```
