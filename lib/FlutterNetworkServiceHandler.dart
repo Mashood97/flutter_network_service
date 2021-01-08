@@ -1,4 +1,4 @@
-library fluttetnetworkservicehandler;
+library flutternetworkservicehandler;
 
 export 'src/http_network_service.dart';
 

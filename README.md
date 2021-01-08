@@ -6,8 +6,6 @@
    ```
 2) run flutter pub get to update the packages dependencies.
 
-
-
 # ⚡️ Import
 3) In your code, you can use it like this:
   first import the package:
@@ -19,8 +17,8 @@ then use it like this in your code:
   ```
 
 import 'package:flutter/material.dart';
-import 'package:flutternetworkservicehandler/src/http_exception.dart';
 import 'package:flutternetworkservicehandler/src/http_network_service.dart';
+import 'package:flutternetworkservicehandler/src/http_exception.dart';
 
 void main() {
   runApp(MyApp());
@@ -91,10 +89,11 @@ class _MyHomePageState extends State<MyHomePage> {
       } else if (error.toString().contains('Internal Server Error')) {
         errorMessage =
             'The server encountered an error and could not complete your request.';
+      } else if (error.toString().contains('No Internet Found')) {
+        errorMessage =
+            'There is no or poor internet connect. Please try again later';
       }
       _showErrorDialog(errorMessage);
-    } catch (e) {
-      print(e.toString());
     }
   }
 
@@ -153,6 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
 
 ```
 # 🐛 Bugs/Requests 
