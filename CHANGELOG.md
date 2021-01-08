@@ -6,3 +6,6 @@ Added Status code handling with http exception custom class on flutter network s
 
 [0.0.3] - 08-Jan-2021
 Added Internet Connectivity check.
+
+[0.0.4] - 08-Jan-2021
+Added Internet Connectivity check.

@@ -51,10 +51,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Future getUsersData() async {
     try {
       final responseUsersList = await HttpNetworkService.getRequest(
-          url: 'https://jsonplaceholder.typicode.com/userss',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          });
+        url: 'https://jsonplaceholder.typicode.com/userss',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        networkCheckDurationInSeconds: 30,
+      );
       for (var items in responseUsersList) {
         print(items);
         _usersList.add({

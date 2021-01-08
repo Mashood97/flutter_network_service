@@ -19,7 +19,7 @@ class HttpNetworkService {
 
   //it sends a get request using http package with exception handling
   static getRequest(
-      {var url, var headers, var networkCheckDurationInSeconds}) async {
+      {var url, var headers, var networkCheckDurationInSeconds = 30}) async {
     try {
       bool isInternetAvailable = await _getInternetForMarkAttendance(
           seconds: networkCheckDurationInSeconds);
@@ -48,7 +48,7 @@ class HttpNetworkService {
       {var url,
       var headers,
       var body,
-      var networkCheckDurationInSeconds}) async {
+      var networkCheckDurationInSeconds = 30}) async {
     try {
       bool isInternetAvailable = await _getInternetForMarkAttendance(
           seconds: networkCheckDurationInSeconds);
@@ -77,7 +77,7 @@ class HttpNetworkService {
       {var url,
       var headers,
       var body,
-      var networkCheckDurationInSeconds}) async {
+      var networkCheckDurationInSeconds = 30}) async {
     try {
       bool isInternetAvailable = await _getInternetForMarkAttendance(
           seconds: networkCheckDurationInSeconds);
@@ -103,7 +103,7 @@ class HttpNetworkService {
 
   //it sends a delete request using http package with exception handling
   static deleteRequest(
-      {var url, var headers, var networkCheckDurationInSeconds}) async {
+      {var url, var headers, var networkCheckDurationInSeconds = 30}) async {
     try {
       bool isInternetAvailable = await _getInternetForMarkAttendance(
           seconds: networkCheckDurationInSeconds);
@@ -132,7 +132,7 @@ class HttpNetworkService {
       {var url,
       var headers,
       var body,
-      var networkCheckDurationInSeconds}) async {
+      var networkCheckDurationInSeconds = 30}) async {
     try {
       bool isInternetAvailable = await _getInternetForMarkAttendance(
           seconds: networkCheckDurationInSeconds);

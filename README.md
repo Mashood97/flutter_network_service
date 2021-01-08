@@ -72,7 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
           url: 'https://jsonplaceholder.typicode.com/userss',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-          });
+          },
+            networkCheckDurationInSeconds: 30,
+          );
       for (var items in responseUsersList) {
         print(items);
         _usersList.add({
