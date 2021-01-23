@@ -8,4 +8,7 @@ Added Status code handling with http exception custom class on flutter network s
 Added Internet Connectivity check.
 
 [0.0.4] - 08-Jan-2021
-Added Internet Connectivity check.
+Added Internet Connectivity check using data connection checker.
+
+[0.0.5] - 08-Jan-2021
+Replace data connection checker with connectivity package to handle Internet check for all the platforms.

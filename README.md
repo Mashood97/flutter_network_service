@@ -69,12 +69,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Future getUsersData() async {
     try {
       final responseUsersList = await HttpNetworkService.getRequest(
-          url: 'https://jsonplaceholder.typicode.com/userss',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-            networkCheckDurationInSeconds: 30,
-          );
+        url: 'https://jsonplaceholder.typicode.com/userss',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      );
       for (var items in responseUsersList) {
         print(items);
         _usersList.add({
@@ -154,6 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
 
 
 ```

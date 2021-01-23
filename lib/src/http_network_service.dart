@@ -1,16 +1,16 @@
 import 'dart:convert';
 
-import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:http/http.dart' as http;
+import 'package:connectivity/connectivity.dart';
 
 import 'http_exception.dart';
 
 class HttpNetworkService {
-  static _getInternetForMarkAttendance({var seconds}) async {
-    bool result = await DataConnectionChecker().hasConnection.timeout(
-          Duration(seconds: seconds),
-        );
-    if (result == true) {
+  static _checkInternet() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      return true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
       return true;
     } else {
       return false;
@@ -18,11 +18,9 @@ class HttpNetworkService {
   }
 
   //it sends a get request using http package with exception handling
-  static getRequest(
-      {var url, var headers, var networkCheckDurationInSeconds = 30}) async {
+  static getRequest({var url, var headers}) async {
     try {
-      bool isInternetAvailable = await _getInternetForMarkAttendance(
-          seconds: networkCheckDurationInSeconds);
+      bool isInternetAvailable = await _checkInternet();
       if (isInternetAvailable) {
         final response = await http.get(url, headers: headers);
         if (response.statusCode == 200 || response.statusCode <= 299) {
@@ -44,14 +42,13 @@ class HttpNetworkService {
   }
 
   //it sends a post request using http package with exception handling
-  static postRequest(
-      {var url,
-      var headers,
-      var body,
-      var networkCheckDurationInSeconds = 30}) async {
+  static postRequest({
+    var url,
+    var headers,
+    var body,
+  }) async {
     try {
-      bool isInternetAvailable = await _getInternetForMarkAttendance(
-          seconds: networkCheckDurationInSeconds);
+      bool isInternetAvailable = await _checkInternet();
       if (isInternetAvailable) {
         final response = await http.post(url, headers: headers, body: body);
         if (response.statusCode == 200 || response.statusCode <= 299) {
@@ -73,14 +70,9 @@ class HttpNetworkService {
   }
 
   //it sends a put request using http package with exception handling
-  static putRequest(
-      {var url,
-      var headers,
-      var body,
-      var networkCheckDurationInSeconds = 30}) async {
+  static putRequest({var url, var headers, var body}) async {
     try {
-      bool isInternetAvailable = await _getInternetForMarkAttendance(
-          seconds: networkCheckDurationInSeconds);
+      bool isInternetAvailable = await _checkInternet();
       if (isInternetAvailable) {
         final response = await http.put(url, headers: headers, body: body);
         if (response.statusCode == 200 || response.statusCode <= 299) {
@@ -102,11 +94,9 @@ class HttpNetworkService {
   }
 
   //it sends a delete request using http package with exception handling
-  static deleteRequest(
-      {var url, var headers, var networkCheckDurationInSeconds = 30}) async {
+  static deleteRequest({var url, var headers}) async {
     try {
-      bool isInternetAvailable = await _getInternetForMarkAttendance(
-          seconds: networkCheckDurationInSeconds);
+      bool isInternetAvailable = await _checkInternet();
       if (isInternetAvailable) {
         final response = await http.delete(url, headers: headers);
         if (response.statusCode == 200 || response.statusCode <= 299) {
@@ -128,14 +118,9 @@ class HttpNetworkService {
   }
 
   //it sends a patch request using http package with exception handling
-  static patchRequest(
-      {var url,
-      var headers,
-      var body,
-      var networkCheckDurationInSeconds = 30}) async {
+  static patchRequest({var url, var headers, var body}) async {
     try {
-      bool isInternetAvailable = await _getInternetForMarkAttendance(
-          seconds: networkCheckDurationInSeconds);
+      bool isInternetAvailable = await _checkInternet();
       if (isInternetAvailable) {
         final response = await http.patch(url, headers: headers, body: body);
         if (response.statusCode == 200 || response.statusCode <= 299) {

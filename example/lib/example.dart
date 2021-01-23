@@ -55,7 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        networkCheckDurationInSeconds: 30,
       );
       for (var items in responseUsersList) {
         print(items);

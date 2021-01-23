@@ -1,6 +1,6 @@
 name: flutternetworkservicehandler
-description: This Package is easy and useful to handle network calls with the help of http package a simple network service handler is made to make request with passing headers, url, body and duration in seconds for checking internet connectivity.
-version: 0.0.4
+description: This Package is easy and useful to handle network calls using single class.
+version: 0.0.5
 homepage: https://github.com/Mashood97/FlutterNetworkServiceHandler
 
 environment:
@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.12.2
-  data_connection_checker: ^0.3.4
+  connectivity: ^2.0.2
 
 dev_dependencies:
   flutter_test:
