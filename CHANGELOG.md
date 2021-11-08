@@ -12,3 +12,6 @@ Added Internet Connectivity check using data connection checker.
 
 [0.0.5] - 08-Jan-2021
 Replace data connection checker with connectivity package to handle Internet check for all the platforms.
+
+[0.0.6] - 06-Jan-2021
+Replace http with dio, added image uploading support etc.

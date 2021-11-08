@@ -1,143 +1,130 @@
 import 'dart:convert';
-
-import 'package:http/http.dart' as http;
-import 'package:connectivity/connectivity.dart';
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:flutter_network_service_handler/src/dio_client.dart';
 
 import 'http_exception.dart';
 
 class HttpNetworkService {
-  static _checkInternet() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile) {
-      return true;
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      return true;
-    } else {
-      return false;
-    }
+  static late DioClient _dioClient;
+
+  static init({
+    required String? baseUrl,
+  }) {
+    var dio = Dio();
+
+    _dioClient = DioClient(
+      baseUrl: baseUrl,
+      dio: dio,
+    );
   }
 
   //it sends a get request using http package with exception handling
-  static getRequest({var url, var headers}) async {
+  static getRequest(
+      {String? uri,
+      Map<String, dynamic>? queryParameters,
+      Options? options,
+      CancelToken? cancelToken,
+      ProgressCallback? onReceiveProgress}) async {
     try {
-      bool isInternetAvailable = await _checkInternet();
-      if (isInternetAvailable) {
-        final response = await http.get(url, headers: headers);
-        if (response.statusCode == 200 || response.statusCode <= 299) {
-          final decodedResponse = json.decode(response.body);
-          return decodedResponse;
-        } else if (response.statusCode == 300 || response.statusCode <= 399) {
-          throw HttpException('Redirection error');
-        } else if (response.statusCode == 400 || response.statusCode <= 499) {
-          throw HttpException('Bad Request Format');
-        } else if (response.statusCode == 500 || response.statusCode <= 599) {
-          throw HttpException('Internal Server Error');
-        }
-      } else {
-        throw HttpException('No Internet Found');
-      }
-    } catch (e) {
-      throw e;
+      final response = await _dioClient.get(
+        uri,
+        queryParameters: queryParameters,
+        cancelToken: cancelToken,
+        onReceiveProgress: onReceiveProgress,
+        options: options,
+      );
+
+      return response;
+    } on HttpException catch (e) {
+      print(e.message);
+      throw e.message;
     }
   }
 
   //it sends a post request using http package with exception handling
   static postRequest({
-    var url,
-    var headers,
-    var body,
+    String? uri,
+    data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      bool isInternetAvailable = await _checkInternet();
-      if (isInternetAvailable) {
-        final response = await http.post(url, headers: headers, body: body);
-        if (response.statusCode == 200 || response.statusCode <= 299) {
-          final decodedResponse = json.decode(response.body);
-          return decodedResponse;
-        } else if (response.statusCode == 300 || response.statusCode <= 399) {
-          throw HttpException('Redirection error');
-        } else if (response.statusCode == 400 || response.statusCode <= 499) {
-          throw HttpException('Bad Request Format');
-        } else if (response.statusCode == 500 || response.statusCode <= 599) {
-          throw HttpException('Internal Server Error');
-        }
-      } else {
-        throw HttpException('No Internet Found');
-      }
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  //it sends a put request using http package with exception handling
-  static putRequest({var url, var headers, var body}) async {
-    try {
-      bool isInternetAvailable = await _checkInternet();
-      if (isInternetAvailable) {
-        final response = await http.put(url, headers: headers, body: body);
-        if (response.statusCode == 200 || response.statusCode <= 299) {
-          final decodedResponse = json.decode(response.body);
-          return decodedResponse;
-        } else if (response.statusCode == 300 || response.statusCode <= 399) {
-          throw HttpException('Redirection error');
-        } else if (response.statusCode == 400 || response.statusCode <= 499) {
-          throw HttpException('Bad Request Format');
-        } else if (response.statusCode == 500 || response.statusCode <= 599) {
-          throw HttpException('Internal Server Error');
-        }
-      } else {
-        throw HttpException('No Internet Found');
-      }
-    } catch (e) {
-      throw e;
+      final response = await _dioClient.post(
+        uri,
+        options: options,
+        onReceiveProgress: onReceiveProgress,
+        cancelToken: cancelToken,
+        queryParameters: queryParameters,
+        data: data,
+        onSendProgress: onSendProgress,
+      );
+      return response;
+    } on HttpException catch (e) {
+      print(e.message);
+      throw e.message;
     }
   }
 
   //it sends a delete request using http package with exception handling
-  static deleteRequest({var url, var headers}) async {
+  static deleteRequest(
+      {String? uri,
+      Map<String, dynamic>? queryParameters,
+      Options? options,
+      CancelToken? cancelToken}) async {
     try {
-      bool isInternetAvailable = await _checkInternet();
-      if (isInternetAvailable) {
-        final response = await http.delete(url, headers: headers);
-        if (response.statusCode == 200 || response.statusCode <= 299) {
-          final decodedResponse = json.decode(response.body);
-          return decodedResponse;
-        } else if (response.statusCode == 300 || response.statusCode <= 399) {
-          throw HttpException('Redirection error');
-        } else if (response.statusCode == 400 || response.statusCode <= 499) {
-          throw HttpException('Bad Request Format');
-        } else if (response.statusCode == 500 || response.statusCode <= 599) {
-          throw HttpException('Internal Server Error');
-        }
-      } else {
-        throw HttpException('No Internet Found');
-      }
-    } catch (e) {
-      throw e;
+      final response = await _dioClient.delete(
+        uri,
+        queryParameters: queryParameters,
+        cancelToken: cancelToken,
+        options: options,
+      );
+      return response;
+    } on HttpException catch (e) {
+      print(e.message);
+      throw e.message;
     }
   }
 
-  //it sends a patch request using http package with exception handling
-  static patchRequest({var url, var headers, var body}) async {
+  //Send single or multiple images to server
+  static sendImagesRequest(
+      {required String? uri,
+      Options? options,
+      CancelToken? cancelToken,
+      ProgressCallback? onSendProgress,
+      ProgressCallback? onReceiveProgress,
+      Map<String, dynamic>? queryParameters,
+      required List<File> images,
+      required String? fileName}) async {
     try {
-      bool isInternetAvailable = await _checkInternet();
-      if (isInternetAvailable) {
-        final response = await http.patch(url, headers: headers, body: body);
-        if (response.statusCode == 200 || response.statusCode <= 299) {
-          final decodedResponse = json.decode(response.body);
-          return decodedResponse;
-        } else if (response.statusCode == 300 || response.statusCode <= 399) {
-          throw HttpException('Redirection error');
-        } else if (response.statusCode == 400 || response.statusCode <= 499) {
-          throw HttpException('Bad Request Format');
-        } else if (response.statusCode == 500 || response.statusCode <= 599) {
-          throw HttpException('Internal Server Error');
-        }
-      } else {
-        throw HttpException('No Internet Found');
-      }
-    } catch (e) {
-      throw e;
+      var formData = FormData();
+
+      images.forEach((image) async {
+        formData.files.add(MapEntry(
+          fileName!,
+          await MultipartFile.fromFile(
+            '${image.path}',
+            filename: fileName,
+          ),
+        ));
+      });
+
+      final response = await _dioClient.post(
+        uri,
+        data: formData,
+        options: options,
+        cancelToken: cancelToken,
+        queryParameters: queryParameters,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response;
+    } on HttpException catch (e) {
+      print(e.message);
+      throw e.message;
     }
   }
 }

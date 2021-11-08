@@ -1,6 +1,11 @@
+/// THIS CONTAINS THE BASIC GET REQUEST USING flutternetworkservicehandler
+/// You can integrate it easily with your flutter apps.
+/// Api throws httpexception which is handled accordingly just use simple try and catch block and everything will be
+/// handled by the package
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutternetworkservicehandler/src/http_network_service.dart';
-import 'package:flutternetworkservicehandler/src/http_exception.dart';
+import 'package:flutter_network_service_handler/src/http_network_service.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Error Occured'),
         content: Text(message),
         actions: <Widget>[
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.of(ctx).pop();
             },
@@ -50,11 +55,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future getUsersData() async {
     try {
+      //Initialize HttpNetwork Service
+      await HttpNetworkService.init(
+        baseUrl: 'https://jsonplaceholder.typicode.com',
+      );
+      //Then use it like this
       final responseUsersList = await HttpNetworkService.getRequest(
-        url: 'https://jsonplaceholder.typicode.com/userss',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
+        uri: '/userss',
+        //options import from dio package.
+        options: Options(headers: {
+          "Content-Type": "application/json",
+        }),
       );
       for (var items in responseUsersList) {
         print(items);
@@ -64,19 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
           'website': items['website'],
         });
       }
-    } on HttpException catch (error) {
-      if (error.toString().contains('Redirection error')) {
-        errorMessage = 'The resource requested has been temporarily moved.';
-      } else if (error.toString().contains('Bad Request Format')) {
-        errorMessage = 'Your client has issued a malformed or illegal request.';
-      } else if (error.toString().contains('Internal Server Error')) {
-        errorMessage =
-            'The server encountered an error and could not complete your request.';
-      } else if (error.toString().contains('No Internet Found')) {
-        errorMessage =
-            'There is no or poor internet connect. Please try again later';
-      }
-      _showErrorDialog(errorMessage);
+    } catch (error) {
+      errorMessage = error.toString();
+      _showErrorDialog(
+        errorMessage,
+      );
     }
   }
 
