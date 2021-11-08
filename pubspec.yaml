@@ -1,7 +1,7 @@
-name: flutter_network_service_handler
+name: flutter_network_service
 description: This Package is made to make network calls easier so you may not need to create a single class by yourself, just import and enjoy.
 version: 0.0.6
-homepage: https://github.com/Mashood97/FlutterNetworkServiceHandler
+homepage: https://github.com/Mashood97/flutter_network_service
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

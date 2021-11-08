@@ -2,7 +2,7 @@
 
 1) First goto your pubspec.yaml file and add dependency:
    ```
-   flutternetworkservicehandler:
+   flutter_network_service:
    ```
 2) run flutter pub get to update the packages dependencies.
 
@@ -10,7 +10,7 @@
 3) In your code, you can use it like this:
   first import the package:
   ```
- import 'package:flutternetworkservicehandler/HttpNetworkService.dart';
+ import 'package:flutter_network_service/HttpNetworkService.dart';
   ```
 # 🎮 Code Usage
 then use it like this in your code:

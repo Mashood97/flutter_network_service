@@ -5,7 +5,8 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_network_service_handler/src/http_network_service.dart';
+import 'package:flutter_network_service/flutter_network_service.dart';
+
 
 void main() {
   runApp(MyApp());

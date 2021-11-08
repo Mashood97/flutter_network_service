@@ -1,7 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter_network_service_handler/src/dio_client.dart';
+import 'package:flutter_network_service/src/dio_client.dart';
 
 import 'http_exception.dart';
 
