@@ -18,8 +18,8 @@ class HttpNetworkService {
     );
   }
 
-  //it sends a get request using http package with exception handling
-  static getRequest(
+  //it sends a get request using dio package with exception handling
+  static Future getRequest(
       {String? uri,
       Map<String, dynamic>? queryParameters,
       Options? options,
@@ -36,13 +36,12 @@ class HttpNetworkService {
 
       return response;
     } on HttpException catch (e) {
-      print(e.message);
       throw e.message;
     }
   }
 
-  //it sends a post request using http package with exception handling
-  static postRequest({
+  //it sends a post request using dio package with exception handling
+  static Future postRequest({
     String? uri,
     data,
     Map<String, dynamic>? queryParameters,
@@ -63,13 +62,12 @@ class HttpNetworkService {
       );
       return response;
     } on HttpException catch (e) {
-      print(e.message);
       throw e.message;
     }
   }
 
-  //it sends a delete request using http package with exception handling
-  static deleteRequest(
+  //it sends a delete request using dio package with exception handling
+  static Future deleteRequest(
       {String? uri,
       Map<String, dynamic>? queryParameters,
       Options? options,
@@ -83,13 +81,12 @@ class HttpNetworkService {
       );
       return response;
     } on HttpException catch (e) {
-      print(e.message);
       throw e.message;
     }
   }
 
-  //Send single or multiple images to server
-  static sendImagesRequest(
+  //Send single or multiple images to server using dio
+  static Future sendImagesRequest(
       {required String? uri,
       Options? options,
       CancelToken? cancelToken,
@@ -122,7 +119,6 @@ class HttpNetworkService {
       );
       return response;
     } on HttpException catch (e) {
-      print(e.message);
       throw e.message;
     }
   }
